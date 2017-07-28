@@ -1,14 +1,46 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8" />
+
     <title>SF Airport API</title>
     <link rel="stylesheet" href="sass/app.min.css">
+    <script src="js/scripts.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="js/key.js" charset="utf-8"></script>
+    <script type="text/javascript">
+      window.onload = function () {
+        var URL = "http://www.flysfo.com/api/airlines.json?limit=20&key="
+        URL += KEY;
+
+        $.ajax({
+          dataType: "json",
+          url: URL,
+          success: success
+        });
+      }
+
+      function success(e) {
+        var result = "";
+        $.each(e, function(index, value) {
+          // console.log("I: " + index + " V: + value.node_title");
+          result += "<p><img src='http:" + value.image + "' /></p>";
+          result += "<h3>" + value.node_title + "</h3>";
+          result += "<p>" + value.phone + "</p>";
+          result += value.body;
+          result += "<div style='border-bottom: 1px solid black;'></div>"
+        });
+        $('#result').html(result);
+      }
+    </script>
   </head>
-  <header>
-    <h4>The World</h4>
-  </header>
   <body>
-    <h1>Hello World</h1>
+
+    <!-- <div id="container"> -->
+      <h1>Airlines At SFO</h1>
+      <div id="result"></div>
+    <!-- </div> -->
+
+
   </body>
-  <script src="" charset="utf-8"></script>
 </html>
